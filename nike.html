@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nike</title>
+  <meta property="og:title" content="Nike" />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton:wght@400&family=Epilogue:ital,wght@0,400;0,700;1,400;1,700&display=swap" />
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Epilogue', sans-serif; background: #fff; color: #111; overflow-x: hidden; }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── Typography ── */
+    .font-anton { font-family: 'Anton', sans-serif; }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      font-family: 'Epilogue', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      border: 2px solid transparent;
+    }
+    .btn-dark { background: #111; color: #fff; border-color: #111; }
+    .btn-dark:hover { background: #333; border-color: #333; }
+    .btn-outline { background: transparent; color: #111; border-color: #111; }
+    .btn-outline:hover { background: #111; color: #fff; }
+    .btn-outline-white { background: transparent; color: #fff; border-color: #fff; }
+    .btn-outline-white:hover { background: #fff; color: #111; }
+    .btn-white { background: #fff; color: #111; border-color: #fff; }
+    .btn-white:hover { background: #e0e0e0; border-color: #e0e0e0; }
+
+    /* ─────────────────────────────────────────
+       HEADER
+    ───────────────────────────────────────── */
+    #header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.6) 80%, transparent 100%);
+      padding: 0 5vw;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 4px solid #c8ff00;
+    }
+
+    .header-logo img {
+      height: 38px;
+      width: auto;
+      filter: brightness(0) invert(1);
+    }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+    .header-nav a {
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .header-nav a:hover { color: #c8ff00; }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .header-actions .btn-book {
+      padding: 9px 22px;
+      font-size: 0.8rem;
+    }
+    .cart-btn {
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .cart-btn:hover { color: #c8ff00; }
+    .cart-count {
+      background: #c8ff00;
+      color: #111;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      font-size: 0.7rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: #fff;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile nav */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 72px; left: 0; right: 0;
+      background: rgba(0,0,0,0.97);
+      padding: 32px 5vw;
+      z-index: 999;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* ─────────────────────────────────────────
+       HERO
+    ───────────────────────────────────────── */
+    #hero {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+    .hero-image {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+    /* Gradient overlay pour lisibilité du texte */
+    .hero-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(0,0,0,0.72) 0%,
+        rgba(0,0,0,0.45) 50%,
+        rgba(0,0,0,0.15) 100%
+      );
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 8vw 80px;
+      gap: 28px;
+      max-width: 700px;
+    }
+    .hero-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+    }
+    .hero-title {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(3.5rem, 8vw, 8rem);
+      line-height: 1;
+      color: #fff;
+      text-transform: uppercase;
+    }
+    .hero-title .accent { color: #c8ff00; }
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.6;
+      max-width: 460px;
+    }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    /* ─────────────────────────────────────────
+       PRODUCTS SECTION
+    ───────────────────────────────────────── */
+    #products {
+      background: #0a0a0a;
+      color: #fff;
+      padding: 100px 8vw;
+    }
+    .products-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 64px;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .products-title {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(2.4rem, 4vw, 4rem);
+      text-transform: uppercase;
+      line-height: 1.05;
+    }
+    .products-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+    .product-card {
+      background: #161616;
+      border: 1px solid #222;
+      transition: border-color 0.3s, transform 0.3s;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .product-card:hover {
+      border-color: #c8ff00;
+      transform: translateY(-4px);
+    }
+    .product-image {
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      background: #111;
+    }
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+    .product-card:hover .product-image img { transform: scale(1.04); }
+    .product-info {
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .product-name {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.8rem;
+      text-transform: uppercase;
+    }
+    .product-price {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #c8ff00;
+    }
+    .product-desc {
+      font-size: 0.9rem;
+      color: #aaa;
+      line-height: 1.7;
+    }
+    .product-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+    .btn-cart {
+      padding: 11px 24px;
+      font-size: 0.8rem;
+      background: #c8ff00;
+      color: #111;
+      border: 2px solid #c8ff00;
+      font-family: 'Epilogue', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-cart:hover { background: #b5e600; border-color: #b5e600; }
+
+    /* ─────────────────────────────────────────
+       MARQUEE
+    ───────────────────────────────────────── */
+    #marquee {
+      background: #000;
+      padding: 28px 0;
+      overflow: hidden;
+      border-top: 1px solid #222;
+      border-bottom: 1px solid #222;
+    }
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marquee-scroll 12s linear infinite;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+    .marquee-item {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      color: #fff;
+      text-transform: uppercase;
+      white-space: nowrap;
+      padding: 0 48px;
+      display: flex;
+      align-items: center;
+      gap: 48px;
+    }
+    .marquee-item .dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background: #c8ff00;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    @keyframes marquee-scroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ─────────────────────────────────────────
+       SOCIAL
+    ───────────────────────────────────────── */
+    #social {
+      background: #f5f5f5;
+      padding: 100px 8vw;
+      text-align: center;
+    }
+    .social-title {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(2rem, 3.5vw, 3.2rem);
+      text-transform: uppercase;
+      margin-bottom: 56px;
+    }
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 48px;
+      flex-wrap: wrap;
+    }
+    .social-icon {
+      width: 72px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.25s;
+    }
+    .social-icon:hover { transform: scale(1.15); }
+    .social-icon img {
+      width: 56px;
+      height: 56px;
+      object-fit: contain;
+    }
+
+    /* ─────────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────────── */
+    #footer {
+      background: #fff;
+      border-top: 1px solid #e0e0e0;
+      padding: 80px 8vw 48px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 64px;
+    }
+    .footer-col-title {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 20px;
+      color: #111;
+    }
+    .footer-col p {
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.8;
+    }
+    .footer-col a {
+      color: #666;
+      transition: color 0.2s;
+    }
+    .footer-col a:hover { color: #111; }
+    .footer-logo { height: 32px; width: auto; margin-bottom: 16px; }
+    .footer-tagline {
+      font-size: 0.85rem;
+      color: #999;
+      line-height: 1.6;
+    }
+    .footer-bottom {
+      border-top: 1px solid #e0e0e0;
+      padding-top: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-bottom p {
+      font-size: 0.8rem;
+      color: #aaa;
+    }
+
+    /* ─────────────────────────────────────────
+       CART DRAWER (simple)
+    ───────────────────────────────────────── */
+    .cart-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 2000;
+    }
+    .cart-overlay.open { display: block; }
+    .cart-drawer {
+      position: fixed;
+      top: 0; right: 0;
+      width: min(420px, 100vw);
+      height: 100vh;
+      background: #fff;
+      z-index: 2001;
+      transform: translateX(100%);
+      transition: transform 0.35s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .cart-drawer.open { transform: translateX(0); }
+    .cart-drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 28px 20px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .cart-drawer-header h2 {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.5rem;
+      text-transform: uppercase;
+    }
+    .cart-close {
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: #111;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cart-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 28px;
+    }
+    .cart-empty {
+      text-align: center;
+      color: #999;
+      margin-top: 60px;
+      font-size: 0.95rem;
+    }
+    .cart-items { display: flex; flex-direction: column; gap: 20px; }
+    .cart-item {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .cart-item img {
+      width: 72px;
+      height: 72px;
+      object-fit: cover;
+      background: #f5f5f5;
+    }
+    .cart-item-info { flex: 1; }
+    .cart-item-name { font-weight: 700; font-size: 0.9rem; }
+    .cart-item-price { color: #888; font-size: 0.85rem; margin-top: 4px; }
+    .cart-item-remove {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #ccc;
+      font-size: 1.1rem;
+      transition: color 0.2s;
+    }
+    .cart-item-remove:hover { color: #111; }
+    .cart-footer {
+      padding: 24px 28px;
+      border-top: 1px solid #e0e0e0;
+    }
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+    .cart-checkout {
+      width: 100%;
+      padding: 16px;
+      background: #111;
+      color: #fff;
+      border: none;
+      font-family: 'Epilogue', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .cart-checkout:hover { background: #333; }
+
+    /* ─────────────────────────────────────────
+       RESPONSIVE
+    ───────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .products-grid { grid-template-columns: 1fr; }
+      .products-header { flex-direction: column; align-items: flex-start; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .header-nav, .header-actions .btn-book { display: none; }
+      .hamburger { display: flex; }
+      .hero-content { padding: 110px 6vw 60px; }
+      .hero-image::after {
+        background: linear-gradient(
+          to bottom,
+          rgba(0,0,0,0.55) 0%,
+          rgba(0,0,0,0.45) 60%,
+          rgba(0,0,0,0.25) 100%
+        );
+      }
+      .footer-grid { grid-template-columns: 1fr; }
+      .social-icons { gap: 28px; }
+      #products, #social, #footer { padding-left: 6vw; padding-right: 6vw; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ HEADER ══ -->
+  <header id="header">
+    <a href="#" class="header-logo">
+      <img
+        src="http://static1.squarespace.com/static/69c26c4da622881ae391cf28/t/69c30291f868393cb4adbc50/1774387857426/3bb56113ac5560256d7ffd850bf7d819-removebg-preview.png?format=300w"
+        alt="Nike"
+      />
+    </a>
+
+    <nav>
+      <ul class="header-nav">
+        <li><a href="#">Home</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="#social">Social</a></li>
+        <li><a href="#footer">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <a href="#" class="btn btn-outline-white btn-book">Book now</a>
+      <div class="cart-btn" id="cartBtn">
+        Cart <span class="cart-count" id="cartCount">0</span>
+      </div>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile nav -->
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="#">Home</a>
+    <a href="#products">Products</a>
+    <a href="#social">Social</a>
+    <a href="#footer">Contact</a>
+    <a href="#" class="btn btn-dark" style="text-align:center;margin-top:8px;">Book now</a>
+  </nav>
+
+  <!-- ══ HERO ══ -->
+  <section id="hero">
+    <!-- Image de fond pleine largeur -->
+    <div class="hero-image">
+      <img
+        src="https://images.squarespace-cdn.com/content/v1/69c26c4da622881ae391cf28/f40f16b9-1deb-4722-96f7-94bf877fad5d/Gemini_Generated_Image_n0punvn0punvn0pu.png"
+        alt="Nike Flow Track hero"
+        loading="eager"
+      />
+    </div>
+    <!-- Texte par dessus -->
+    <div class="hero-content">
+      <p class="hero-label">New Collection 2026</p>
+      <h1 class="hero-title font-anton">
+        Change<br />Your<br /><span class="accent">Beat.</span>
+      </h1>
+      <p class="hero-subtitle">Step by step — a revolutionary experience that creates an active synergy between your body and your sound environment.</p>
+      <div class="hero-actions">
+        <a href="#products" class="btn btn-white">Discover</a>
+        <a href="#products" class="btn btn-outline-white">Shop now</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PRODUCTS ══ -->
+  <section id="products">
+    <div class="products-header">
+      <h2 class="products-title font-anton">More about<br />our new product</h2>
+      <a href="#" class="btn btn-outline-white">Learn more</a>
+    </div>
+    <div class="products-grid">
+
+      <!-- Product 1: Flow Track -->
+      <div class="product-card">
+        <div class="product-image">
+          <img
+            src="https://images.squarespace-cdn.com/content/v1/69c26c4da622881ae391cf28/3908f1c6-6015-4a33-bd5e-962937b9600f/Futuriste+et+dynamique+_+Nike+%C3%97+Spotify.png"
+            alt="Flow Track"
+            loading="lazy"
+          />
+        </div>
+        <div class="product-info">
+          <h3 class="product-name font-anton">Flow Track</h3>
+          <p class="product-price">€0.00</p>
+          <p class="product-desc">Unlike smartwatches that simply record your data, Flow Track creates an active synergy between your body and your sound environment. This is not a passive tracker — it is a conductor who composes your personal soundtrack in real time.</p>
+          <div class="product-actions">
+            <button class="btn-cart" onclick="addToCart('Flow Track', '€0.00', this.closest('.product-card').querySelector('img').src)">Add to cart</button>
+            <a href="#" class="btn btn-outline-white" style="padding:11px 20px;font-size:0.8rem;">Details</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 2: Nike Flow -->
+      <div class="product-card">
+        <div class="product-image">
+          <img
+            src="https://images.squarespace-cdn.com/content/v1/69c26c4da622881ae391cf28/a2d62f85-7f08-4bd4-b153-051e1695b1c6/tile_0_2.png"
+            alt="Nike Flow Neon Blaze"
+            loading="lazy"
+          />
+        </div>
+        <div class="product-info">
+          <h3 class="product-name font-anton">Nike Flow</h3>
+          <p class="product-price">€189.00</p>
+          <p class="product-desc">Unleash unmatched style and unrivaled comfort with these sleek, neon-accented sneakers. They're not just shoes — they're your new performance-enhancing partner. Step into confidence and energize your routine.</p>
+          <div class="product-actions">
+            <button class="btn-cart" onclick="addToCart('Nike Flow', '€189.00', this.closest('.product-card').querySelector('img').src)">Add to cart</button>
+            <a href="#" class="btn btn-outline-white" style="padding:11px 20px;font-size:0.8rem;">Details</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ MARQUEE ══ -->
+  <section id="marquee">
+    <div class="marquee-track" aria-hidden="true">
+      <!-- Duplicated for seamless loop -->
+      <div class="marquee-item">THE FUTURE OF MOVEMENT <span class="dot"></span></div>
+      <div class="marquee-item">THE FUTURE OF MOVEMENT <span class="dot"></span></div>
+      <div class="marquee-item">THE FUTURE OF MOVEMENT <span class="dot"></span></div>
+      <div class="marquee-item">THE FUTURE OF MOVEMENT <span class="dot"></span></div>
+      <div class="marquee-item">THE FUTURE OF MOVEMENT <span class="dot"></span></div>
+      <div class="marquee-item">THE FUTURE OF MOVEMENT <span class="dot"></span></div>
+      <div class="marquee-item">THE FUTURE OF MOVEMENT <span class="dot"></span></div>
+      <div class="marquee-item">THE FUTURE OF MOVEMENT <span class="dot"></span></div>
+    </div>
+  </section>
+
+  <!-- ══ SOCIAL ══ -->
+  <section id="social">
+    <h2 class="social-title font-anton">Follow us on social</h2>
+    <div class="social-icons">
+      <a href="#" class="social-icon" aria-label="Instagram">
+        <img src="https://images.squarespace-cdn.com/content/v1/69c26c4da622881ae391cf28/4d92e8e6-9fef-4f23-8855-4f7b5ac3af12/logo-medias-sociaux-cercle-noir_197792-2899-removebg-preview.png" alt="Instagram" />
+      </a>
+      <a href="#" class="social-icon" aria-label="Twitter / X">
+        <img src="https://images.squarespace-cdn.com/content/v1/69c26c4da622881ae391cf28/b4dbf108-45e1-4963-b144-d1fea5f8e6fc/nouveau-logo-twitter-de-l-application-ic%C3%B4ne-du-la-plateforme-m%C3%A9dias-sociaux-305511820-removebg-preview.png" alt="Twitter" />
+      </a>
+      <a href="#" class="social-icon" aria-label="Facebook">
+        <img src="https://images.squarespace-cdn.com/content/v1/69c26c4da622881ae391cf28/99933a84-a53d-4aec-ab36-54d3148af32e/images__3_-removebg-preview.png" alt="Facebook" />
+      </a>
+      <a href="#" class="social-icon" aria-label="TikTok">
+        <img src="https://images.squarespace-cdn.com/content/v1/69c26c4da622881ae391cf28/3530b8be-e5b2-4842-b4a9-419b464b8741/cercle-du-logo-tiktok-logo-medias-sociaux-noir_197792-4612-removebg-preview.png" alt="TikTok" />
+      </a>
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ══ -->
+  <footer id="footer">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <img
+          class="footer-logo"
+          src="http://static1.squarespace.com/static/69c26c4da622881ae391cf28/t/69c30291f868393cb4adbc50/1774387857426/3bb56113ac5560256d7ffd850bf7d819-removebg-preview.png?format=300w"
+          alt="Nike"
+        />
+        <p class="footer-tagline">Change Your Beat.<br />Step by step.</p>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-title">Location</h4>
+        <p>
+          One Bowerman Drive<br />
+          Beaverton, OR 97005<br />
+          United States
+        </p>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-title">Contact</h4>
+        <p>
+          <a href="mailto:Investor.Relations@nike.com">Investor.Relations@nike.com</a><br /><br />
+          <a href="tel:+15036716453">+1 503 671 6453</a>
+        </p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Nike, Inc. All rights reserved.</p>
+      <p>Fake website — school project</p>
+    </div>
+  </footer>
+
+  <!-- ══ CART DRAWER ══ -->
+  <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-drawer-header">
+      <h2>Cart</h2>
+      <button class="cart-close" onclick="closeCart()" aria-label="Close cart">✕</button>
+    </div>
+    <div class="cart-body" id="cartBody">
+      <p class="cart-empty" id="cartEmpty">Your cart is empty.</p>
+      <div class="cart-items" id="cartItems"></div>
+    </div>
+    <div class="cart-footer" id="cartFooter" style="display:none;">
+      <div class="cart-total">
+        <span>Total</span>
+        <span id="cartTotal">€0.00</span>
+      </div>
+      <button class="cart-checkout">Checkout</button>
+    </div>
+  </div>
+
+  <script>
+    // ── Hamburger menu ──
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+    });
+    // Close mobile nav when a link is clicked
+    mobileNav.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        mobileNav.classList.remove('open');
+      });
+    });
+
+    // ── Cart ──
+    let cartItems = [];
+
+    function openCart() {
+      document.getElementById('cartOverlay').classList.add('open');
+      document.getElementById('cartDrawer').classList.add('open');
+    }
+    function closeCart() {
+      document.getElementById('cartOverlay').classList.remove('open');
+      document.getElementById('cartDrawer').classList.remove('open');
+    }
+    document.getElementById('cartBtn').addEventListener('click', openCart);
+
+    function addToCart(name, price, img) {
+      const existing = cartItems.find(i => i.name === name);
+      if (existing) {
+        existing.qty++;
+      } else {
+        cartItems.push({ name, price, img, qty: 1 });
+      }
+      renderCart();
+      openCart();
+    }
+
+    function removeFromCart(name) {
+      cartItems = cartItems.filter(i => i.name !== name);
+      renderCart();
+    }
+
+    function renderCart() {
+      const count = cartItems.reduce((s, i) => s + i.qty, 0);
+      document.getElementById('cartCount').textContent = count;
+
+      const empty = document.getElementById('cartEmpty');
+      const itemsEl = document.getElementById('cartItems');
+      const footer = document.getElementById('cartFooter');
+
+      if (cartItems.length === 0) {
+        empty.style.display = 'block';
+        itemsEl.innerHTML = '';
+        footer.style.display = 'none';
+        return;
+      }
+
+      empty.style.display = 'none';
+      footer.style.display = 'block';
+
+      itemsEl.innerHTML = cartItems.map(item => `
+        <div class="cart-item">
+          <img src="${item.img}" alt="${item.name}" />
+          <div class="cart-item-info">
+            <div class="cart-item-name">${item.name} ${item.qty > 1 ? `×${item.qty}` : ''}</div>
+            <div class="cart-item-price">${item.price}</div>
+          </div>
+          <button class="cart-item-remove" onclick="removeFromCart('${item.name}')" aria-label="Remove">✕</button>
+        </div>
+      `).join('');
+
+      // Compute total (only numeric prices)
+      const total = cartItems.reduce((sum, item) => {
+        const val = parseFloat(item.price.replace('€', '').replace(',', '.'));
+        return sum + (isNaN(val) ? 0 : val * item.qty);
+      }, 0);
+      document.getElementById('cartTotal').textContent = `€${total.toFixed(2)}`;
+    }
+
+    // ── Header scroll effect ──
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('header');
+      if (window.scrollY > 60) {
+        header.style.background = 'rgba(0,0,0,0.97)';
+      } else {
+        header.style.background = 'linear-gradient(to bottom, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.6) 80%, transparent 100%)';
+      }
+    });
+  </script>
+
+</body>
+</html>
