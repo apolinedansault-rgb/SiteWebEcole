@@ -175,7 +175,6 @@
       object-fit: cover;
       object-position: center top;
     }
-    /* Gradient overlay pour lisibilité du texte */
     .hero-image::after {
       content: '';
       position: absolute;
@@ -442,7 +441,7 @@
     }
 
     /* ─────────────────────────────────────────
-       CART DRAWER (simple)
+       CART DRAWER
     ───────────────────────────────────────── */
     .cart-overlay {
       display: none;
@@ -554,6 +553,209 @@
     .cart-checkout:hover { background: #333; }
 
     /* ─────────────────────────────────────────
+       MODALS (Discover / Product Details / Checkout)
+    ───────────────────────────────────────── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 3000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: #fff;
+      max-width: 760px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+    }
+    .modal-dark {
+      background: #0a0a0a;
+      color: #fff;
+    }
+    .modal-close {
+      position: absolute;
+      top: 20px; right: 20px;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: inherit;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+    }
+    .modal-image {
+      width: 100%;
+      aspect-ratio: 16/7;
+      object-fit: cover;
+    }
+    .modal-body {
+      padding: 40px 44px 44px;
+    }
+    .modal-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #c8ff00;
+      margin-bottom: 12px;
+    }
+    .modal-title {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      text-transform: uppercase;
+      line-height: 1.05;
+      margin-bottom: 28px;
+    }
+    .modal-section-title {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #c8ff00;
+      margin: 28px 0 10px;
+    }
+    .modal-text {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: #ccc;
+    }
+    .modal-dark .modal-text { color: #bbb; }
+    .modal-price {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #c8ff00;
+      margin: 24px 0 20px;
+    }
+    .modal-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    /* Checkout form */
+    .checkout-modal { max-width: 540px; }
+    .checkout-modal .modal-body { padding: 44px; }
+    .checkout-title {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.8rem;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      padding-right: 40px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      color: #555;
+    }
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid #ddd;
+      font-family: 'Epilogue', sans-serif;
+      font-size: 0.95rem;
+      color: #111;
+      outline: none;
+      transition: border-color 0.2s;
+      background: #fff;
+    }
+    .form-group input:focus, .form-group select:focus { border-color: #111; }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .checkout-separator {
+      border: none;
+      border-top: 1px solid #e0e0e0;
+      margin: 28px 0;
+    }
+    .checkout-section-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 20px;
+    }
+    .checkout-summary {
+      background: #f8f8f8;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+    .checkout-summary-line {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+      color: #555;
+    }
+    .checkout-summary-total {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 700;
+      font-size: 1rem;
+      padding-top: 12px;
+      border-top: 1px solid #e0e0e0;
+      margin-top: 8px;
+    }
+    .btn-pay {
+      width: 100%;
+      padding: 16px;
+      background: #111;
+      color: #fff;
+      border: none;
+      font-family: 'Epilogue', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-pay:hover { background: #333; }
+
+    /* Order confirmed */
+    .order-confirmed {
+      display: none;
+      text-align: center;
+      padding: 60px 44px;
+    }
+    .order-confirmed.show { display: block; }
+    .order-confirmed-icon {
+      font-size: 3rem;
+      margin-bottom: 24px;
+    }
+    .order-confirmed h2 {
+      font-family: 'Anton', sans-serif;
+      font-size: 2rem;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .order-confirmed p {
+      color: #666;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    /* ─────────────────────────────────────────
        RESPONSIVE
     ───────────────────────────────────────── */
     @media (max-width: 900px) {
@@ -576,6 +778,9 @@
       .footer-grid { grid-template-columns: 1fr; }
       .social-icons { gap: 28px; }
       #products, #social, #footer { padding-left: 6vw; padding-right: 6vw; }
+      .modal-body { padding: 28px; }
+      .form-row { grid-template-columns: 1fr; }
+      .checkout-modal .modal-body { padding: 28px; }
     }
   </style>
 </head>
@@ -621,7 +826,6 @@
 
   <!-- ══ HERO ══ -->
   <section id="hero">
-    <!-- Image de fond pleine largeur -->
     <div class="hero-image">
       <img
         src="https://images.squarespace-cdn.com/content/v1/69c26c4da622881ae391cf28/f40f16b9-1deb-4722-96f7-94bf877fad5d/Gemini_Generated_Image_n0punvn0punvn0pu.png"
@@ -629,7 +833,6 @@
         loading="eager"
       />
     </div>
-    <!-- Texte par dessus -->
     <div class="hero-content">
       <p class="hero-label">New Collection 2026</p>
       <h1 class="hero-title font-anton">
@@ -637,7 +840,7 @@
       </h1>
       <p class="hero-subtitle">Step by step — a revolutionary experience that creates an active synergy between your body and your sound environment.</p>
       <div class="hero-actions">
-        <a href="#products" class="btn btn-white">Discover</a>
+        <button class="btn btn-white" onclick="openModal('discoverModal')">Discover</button>
         <a href="#products" class="btn btn-outline-white">Shop now</a>
       </div>
     </div>
@@ -663,10 +866,10 @@
         <div class="product-info">
           <h3 class="product-name font-anton">Flow Track</h3>
           <p class="product-price">€0.00</p>
-          <p class="product-desc">Unlike smartwatches that simply record your data, Flow Track creates an active synergy between your body and your sound environment. This is not a passive tracker — it is a conductor who composes your personal soundtrack in real time.</p>
+          <p class="product-desc">Discover an application offering a comprehensive performance experience.</p>
           <div class="product-actions">
             <button class="btn-cart" onclick="addToCart('Flow Track', '€0.00', this.closest('.product-card').querySelector('img').src)">Add to cart</button>
-            <a href="#" class="btn btn-outline-white" style="padding:11px 20px;font-size:0.8rem;">Details</a>
+            <button class="btn btn-outline-white" style="padding:11px 20px;font-size:0.8rem;" onclick="openModal('flowTrackModal')">Details</button>
           </div>
         </div>
       </div>
@@ -683,10 +886,10 @@
         <div class="product-info">
           <h3 class="product-name font-anton">Nike Flow</h3>
           <p class="product-price">€189.00</p>
-          <p class="product-desc">Unleash unmatched style and unrivaled comfort with these sleek, neon-accented sneakers. They're not just shoes — they're your new performance-enhancing partner. Step into confidence and energize your routine.</p>
+          <p class="product-desc">Discover a shoe that blends innovation, performance and style.</p>
           <div class="product-actions">
             <button class="btn-cart" onclick="addToCart('Nike Flow', '€189.00', this.closest('.product-card').querySelector('img').src)">Add to cart</button>
-            <a href="#" class="btn btn-outline-white" style="padding:11px 20px;font-size:0.8rem;">Details</a>
+            <button class="btn btn-outline-white" style="padding:11px 20px;font-size:0.8rem;" onclick="openModal('nikeFlowModal')">Details</button>
           </div>
         </div>
       </div>
@@ -697,7 +900,6 @@
   <!-- ══ MARQUEE ══ -->
   <section id="marquee">
     <div class="marquee-track" aria-hidden="true">
-      <!-- Duplicated for seamless loop -->
       <div class="marquee-item">THE FUTURE OF MOVEMENT <span class="dot"></span></div>
       <div class="marquee-item">THE FUTURE OF MOVEMENT <span class="dot"></span></div>
       <div class="marquee-item">THE FUTURE OF MOVEMENT <span class="dot"></span></div>
@@ -713,16 +915,16 @@
   <section id="social">
     <h2 class="social-title font-anton">Follow us on social</h2>
     <div class="social-icons">
-      <a href="#" class="social-icon" aria-label="Instagram">
+      <a href="https://www.instagram.com/nike/" target="_blank" rel="noopener" class="social-icon" aria-label="Instagram">
         <img src="https://images.squarespace-cdn.com/content/v1/69c26c4da622881ae391cf28/4d92e8e6-9fef-4f23-8855-4f7b5ac3af12/logo-medias-sociaux-cercle-noir_197792-2899-removebg-preview.png" alt="Instagram" />
       </a>
-      <a href="#" class="social-icon" aria-label="Twitter / X">
+      <a href="https://twitter.com/Nike" target="_blank" rel="noopener" class="social-icon" aria-label="Twitter / X">
         <img src="https://images.squarespace-cdn.com/content/v1/69c26c4da622881ae391cf28/b4dbf108-45e1-4963-b144-d1fea5f8e6fc/nouveau-logo-twitter-de-l-application-ic%C3%B4ne-du-la-plateforme-m%C3%A9dias-sociaux-305511820-removebg-preview.png" alt="Twitter" />
       </a>
-      <a href="#" class="social-icon" aria-label="Facebook">
+      <a href="https://www.facebook.com/nike" target="_blank" rel="noopener" class="social-icon" aria-label="Facebook">
         <img src="https://images.squarespace-cdn.com/content/v1/69c26c4da622881ae391cf28/99933a84-a53d-4aec-ab36-54d3148af32e/images__3_-removebg-preview.png" alt="Facebook" />
       </a>
-      <a href="#" class="social-icon" aria-label="TikTok">
+      <a href="https://www.tiktok.com/@nike" target="_blank" rel="noopener" class="social-icon" aria-label="TikTok">
         <img src="https://images.squarespace-cdn.com/content/v1/69c26c4da622881ae391cf28/3530b8be-e5b2-4842-b4a9-419b464b8741/cercle-du-logo-tiktok-logo-medias-sociaux-noir_197792-4612-removebg-preview.png" alt="TikTok" />
       </a>
     </div>
@@ -777,7 +979,162 @@
         <span>Total</span>
         <span id="cartTotal">€0.00</span>
       </div>
-      <button class="cart-checkout">Checkout</button>
+      <button class="cart-checkout" onclick="openCheckout()">Checkout</button>
+    </div>
+  </div>
+
+  <!-- ══ MODAL — DISCOVER (Nike x Spotify) ══ -->
+  <div class="modal-overlay" id="discoverModal">
+    <div class="modal modal-dark">
+      <button class="modal-close" onclick="closeModal('discoverModal')" aria-label="Close">✕</button>
+      <img
+        class="modal-image"
+        src="https://images.squarespace-cdn.com/content/v1/69c26c4da622881ae391cf28/f40f16b9-1deb-4722-96f7-94bf877fad5d/Gemini_Generated_Image_n0punvn0punvn0pu.png"
+        alt="Nike x Spotify"
+      />
+      <div class="modal-body">
+        <p class="modal-label">Collaboration 2024</p>
+        <h2 class="modal-title">Deux marques.<br />Un seul rythme.</h2>
+
+        <p class="modal-section-title">La naissance d'une collaboration</p>
+        <p class="modal-text">
+          Quand deux icônes se rencontrent. Tout a commencé par une obsession partagée : l'expérience humaine dans l'effort. Nike a toujours cru que le sport est bien plus qu'une performance physique. C'est un état d'esprit, une émotion, un moment suspendu entre ce que tu es et ce que tu peux devenir. Spotify, de son côté, a transformé la musique en carburant quotidien — le son juste, au bon moment, change tout.
+          <br /><br />
+          En 2024, les équipes d'innovation des deux groupes se retrouvent autour d'une question simple mais radicale : et si la musique ne suivait plus le coureur, mais courait avec lui ? De cette conversation est née Nike Flow, la première chaussure de running au monde qui synchronise automatiquement votre playlist à votre rythme de course, en temps réel, via l'algorithme Spotify.
+        </p>
+
+        <p class="modal-section-title">Pourquoi cette collaboration est puissante</p>
+        <p class="modal-text">
+          Deux leaders, un utilisateur commun. Les chiffres le confirment : 96 % des sportifs écoutent de la musique pendant leur effort. Parmi eux, Spotify domine avec plus de 52 % de part d'utilisation. Nike et Spotify ne se sont pas simplement associés — ils ont réalisé qu'ils servaient déjà la même personne, au même instant. Il ne manquait qu'un pont entre les deux.
+          <br /><br />
+          Près de 6 coureurs sur 10 interrompent leur activité pour changer de musique. Ce geste anodin brise le flow, casse le rythme, rompt la concentration. Nike Flow élimine ce problème à la racine. La chaussure détecte votre cadence, votre vitesse, votre intensité — et Spotify adapte la musique en conséquence. Automatiquement. Silencieusement. Parfaitement.
+        </p>
+
+        <p class="modal-section-title">La vision</p>
+        <p class="modal-text">
+          Nous croyons que chaque foulée mérite sa bande-son. Que la musique n'est pas un accessoire de l'effort — elle en est le moteur. Que la technologie doit disparaître derrière l'expérience, pas la remplacer. Avec Nike Flow, nous ne vous vendons pas une chaussure connectée de plus. Nous vous offrons quelque chose que personne n'avait encore pu vous donner : une course qui vous appartient entièrement, du premier pas jusqu'au dernier souffle.
+        </p>
+
+        <div class="modal-actions" style="margin-top:32px;">
+          <button class="btn btn-outline-white" onclick="closeModal('discoverModal');document.getElementById('products').scrollIntoView({behavior:'smooth'})">Voir les produits</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ MODAL — FLOW TRACK DETAILS ══ -->
+  <div class="modal-overlay" id="flowTrackModal">
+    <div class="modal modal-dark">
+      <button class="modal-close" onclick="closeModal('flowTrackModal')" aria-label="Close">✕</button>
+      <img
+        class="modal-image"
+        src="https://images.squarespace-cdn.com/content/v1/69c26c4da622881ae391cf28/3908f1c6-6015-4a33-bd5e-962937b9600f/Futuriste+et+dynamique+_+Nike+%C3%97+Spotify.png"
+        alt="Flow Track"
+      />
+      <div class="modal-body">
+        <p class="modal-label">Application</p>
+        <h2 class="modal-title">Flow Track</h2>
+        <p class="modal-text">
+          Unlike smartwatches that simply record your data, Flow Track creates an active synergy between your body and your sound environment. This is not a passive tracker — it is a conductor who composes your personal soundtrack in real time.
+        </p>
+        <p class="modal-price">€0.00 — Free</p>
+        <div class="modal-actions">
+          <button class="btn-cart" onclick="addToCart('Flow Track', '€0.00', 'https://images.squarespace-cdn.com/content/v1/69c26c4da622881ae391cf28/3908f1c6-6015-4a33-bd5e-962937b9600f/Futuriste+et+dynamique+_+Nike+%C3%97+Spotify.png'); closeModal('flowTrackModal')">Add to cart</button>
+          <button class="btn btn-outline-white" onclick="closeModal('flowTrackModal')">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ MODAL — NIKE FLOW DETAILS ══ -->
+  <div class="modal-overlay" id="nikeFlowModal">
+    <div class="modal modal-dark">
+      <button class="modal-close" onclick="closeModal('nikeFlowModal')" aria-label="Close">✕</button>
+      <img
+        class="modal-image"
+        src="https://images.squarespace-cdn.com/content/v1/69c26c4da622881ae391cf28/a2d62f85-7f08-4bd4-b153-051e1695b1c6/tile_0_2.png"
+        alt="Nike Flow"
+      />
+      <div class="modal-body">
+        <p class="modal-label">Running Shoe</p>
+        <h2 class="modal-title">Nike Flow</h2>
+        <p class="modal-text">
+          Unleash unmatched style and unrivaled comfort with these sleek, neon-accented sneakers. They're not just shoes; they're your new performance-enhancing partner. Step into confidence and energize your routine with these vibrant shoes that make every step feel like a victory. Elevate your style and comfort effortlessly.
+        </p>
+        <p class="modal-price">€189.00</p>
+        <div class="modal-actions">
+          <button class="btn-cart" onclick="addToCart('Nike Flow', '€189.00', 'https://images.squarespace-cdn.com/content/v1/69c26c4da622881ae391cf28/a2d62f85-7f08-4bd4-b153-051e1695b1c6/tile_0_2.png'); closeModal('nikeFlowModal')">Add to cart</button>
+          <button class="btn btn-outline-white" onclick="closeModal('nikeFlowModal')">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ MODAL — CHECKOUT ══ -->
+  <div class="modal-overlay" id="checkoutModal">
+    <div class="modal checkout-modal">
+      <button class="modal-close" onclick="closeModal('checkoutModal')" aria-label="Close">✕</button>
+
+      <!-- Checkout form -->
+      <div id="checkoutForm">
+        <div class="modal-body" style="padding:44px;">
+          <h2 class="checkout-title">Checkout</h2>
+
+          <div class="checkout-summary" id="checkoutSummary"></div>
+
+          <p class="checkout-section-title">Delivery information</p>
+          <div class="form-group">
+            <label>Full name</label>
+            <input type="text" id="checkoutName" placeholder="John Doe" />
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="checkoutEmail" placeholder="john@example.com" />
+          </div>
+          <div class="form-group">
+            <label>Address</label>
+            <input type="text" id="checkoutAddress" placeholder="123 Main Street" />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>City</label>
+              <input type="text" id="checkoutCity" placeholder="Paris" />
+            </div>
+            <div class="form-group">
+              <label>Postal code</label>
+              <input type="text" id="checkoutPostal" placeholder="75001" />
+            </div>
+          </div>
+
+          <hr class="checkout-separator" />
+
+          <p class="checkout-section-title">Payment</p>
+          <div class="form-group">
+            <label>Card number</label>
+            <input type="text" id="checkoutCard" placeholder="1234 5678 9012 3456" maxlength="19" />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Expiry date</label>
+              <input type="text" id="checkoutExpiry" placeholder="MM/YY" maxlength="5" />
+            </div>
+            <div class="form-group">
+              <label>CVV</label>
+              <input type="text" id="checkoutCVV" placeholder="123" maxlength="3" />
+            </div>
+          </div>
+
+          <button class="btn-pay" onclick="submitPayment()">Pay now</button>
+        </div>
+      </div>
+
+      <!-- Order confirmed -->
+      <div class="order-confirmed" id="orderConfirmed">
+        <div class="order-confirmed-icon">✓</div>
+        <h2>Order confirmed!</h2>
+        <p>Thank you for your purchase.<br />You will receive a confirmation email shortly.</p>
+        <button class="btn btn-dark" style="margin-top:32px;" onclick="closeModal('checkoutModal')">Back to shop</button>
+      </div>
     </div>
   </div>
 
@@ -789,12 +1146,34 @@
       hamburger.classList.toggle('open');
       mobileNav.classList.toggle('open');
     });
-    // Close mobile nav when a link is clicked
     mobileNav.querySelectorAll('a').forEach(a => {
       a.addEventListener('click', () => {
         hamburger.classList.remove('open');
         mobileNav.classList.remove('open');
       });
+    });
+
+    // ── Modals ──
+    function openModal(id) {
+      document.getElementById(id).classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    // Close modal on overlay click
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', function(e) {
+        if (e.target === this) closeModal(this.id);
+      });
+    });
+    // Close on Escape
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.open').forEach(m => closeModal(m.id));
+        closeCart();
+      }
     });
 
     // ── Cart ──
@@ -803,10 +1182,12 @@
     function openCart() {
       document.getElementById('cartOverlay').classList.add('open');
       document.getElementById('cartDrawer').classList.add('open');
+      document.body.style.overflow = 'hidden';
     }
     function closeCart() {
       document.getElementById('cartOverlay').classList.remove('open');
       document.getElementById('cartDrawer').classList.remove('open');
+      document.body.style.overflow = '';
     }
     document.getElementById('cartBtn').addEventListener('click', openCart);
 
@@ -848,20 +1229,87 @@
         <div class="cart-item">
           <img src="${item.img}" alt="${item.name}" />
           <div class="cart-item-info">
-            <div class="cart-item-name">${item.name} ${item.qty > 1 ? `×${item.qty}` : ''}</div>
+            <div class="cart-item-name">${item.name}${item.qty > 1 ? ` ×${item.qty}` : ''}</div>
             <div class="cart-item-price">${item.price}</div>
           </div>
           <button class="cart-item-remove" onclick="removeFromCart('${item.name}')" aria-label="Remove">✕</button>
         </div>
       `).join('');
 
-      // Compute total (only numeric prices)
       const total = cartItems.reduce((sum, item) => {
         const val = parseFloat(item.price.replace('€', '').replace(',', '.'));
         return sum + (isNaN(val) ? 0 : val * item.qty);
       }, 0);
       document.getElementById('cartTotal').textContent = `€${total.toFixed(2)}`;
     }
+
+    // ── Checkout ──
+    function openCheckout() {
+      closeCart();
+
+      // Build summary
+      const total = cartItems.reduce((sum, item) => {
+        const val = parseFloat(item.price.replace('€', '').replace(',', '.'));
+        return sum + (isNaN(val) ? 0 : val * item.qty);
+      }, 0);
+
+      const lines = cartItems.map(item => `
+        <div class="checkout-summary-line">
+          <span>${item.name}${item.qty > 1 ? ` ×${item.qty}` : ''}</span>
+          <span>${item.price}</span>
+        </div>
+      `).join('');
+
+      document.getElementById('checkoutSummary').innerHTML = `
+        ${lines}
+        <div class="checkout-summary-total">
+          <span>Total</span>
+          <span>€${total.toFixed(2)}</span>
+        </div>
+      `;
+
+      // Reset to form view
+      document.getElementById('checkoutForm').style.display = 'block';
+      document.getElementById('orderConfirmed').classList.remove('show');
+
+      openModal('checkoutModal');
+    }
+
+    function submitPayment() {
+      const name = document.getElementById('checkoutName').value.trim();
+      const email = document.getElementById('checkoutEmail').value.trim();
+      const address = document.getElementById('checkoutAddress').value.trim();
+      const city = document.getElementById('checkoutCity').value.trim();
+      const postal = document.getElementById('checkoutPostal').value.trim();
+      const card = document.getElementById('checkoutCard').value.trim();
+      const expiry = document.getElementById('checkoutExpiry').value.trim();
+      const cvv = document.getElementById('checkoutCVV').value.trim();
+
+      if (!name || !email || !address || !city || !postal || !card || !expiry || !cvv) {
+        alert('Please fill in all fields.');
+        return;
+      }
+
+      // Show confirmation
+      document.getElementById('checkoutForm').style.display = 'none';
+      document.getElementById('orderConfirmed').classList.add('show');
+
+      // Clear cart
+      cartItems = [];
+      renderCart();
+    }
+
+    // Format card number input
+    document.getElementById('checkoutCard').addEventListener('input', function() {
+      let v = this.value.replace(/\D/g, '').substring(0, 16);
+      this.value = v.replace(/(.{4})/g, '$1 ').trim();
+    });
+    // Format expiry input
+    document.getElementById('checkoutExpiry').addEventListener('input', function() {
+      let v = this.value.replace(/\D/g, '').substring(0, 4);
+      if (v.length >= 3) v = v.substring(0,2) + '/' + v.substring(2);
+      this.value = v;
+    });
 
     // ── Header scroll effect ──
     window.addEventListener('scroll', () => {
